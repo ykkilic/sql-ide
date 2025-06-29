@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQL IDE</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo">SQL IDE</div>
+      <div class="toolbar">
+        <button class="btn" onclick="executeQuery()">▶ Run</button>
+        <button class="btn secondary" onclick="saveQuery()">💾 Save</button>
+        <button class="btn secondary" onclick="openQuery()">📁 Open</button>
+        <button class="btn secondary" onclick="formatQuery()">
+          🎨 Format
+        </button>
+        <button class="btn danger" onclick="clearEditor()">🗑️ Clear</button>
+      </div>
+      <div style="margin-left: auto">
+        <button class="btn secondary" onclick="toggleTheme()">🌙</button>
+      </div>
+    </div>
+
+    <div class="main-container">
+      <div class="sidebar">
+        <div class="sidebar-header">Database Explorer</div>
+        <div class="database-tree">
+          <div class="tree-item expanded" onclick="toggleTreeItem(this)">
+            <div class="tree-icon">🗄️</div>
+            <span id="db-name">MyDatabase SabreTruth</span>
+          </div>
+          <div class="tree-children">
+            <div class="tree-item" onclick="toggleTreeItem(this)">
+              <div class="tree-icon">📋</div>
+              <span>Tables</span>
+            </div>
+            <div class="tree-children">
+              <div class="tree-item" onclick="selectTable('users')">
+                <div class="tree-icon">📊</div>
+                <span>users</span>
+              </div>
+              <div class="tree-item" onclick="selectTable('products')">
+                <div class="tree-icon">📊</div>
+                <span>products</span>
+              </div>
+              <div class="tree-item" onclick="selectTable('orders')">
+                <div class="tree-icon">📊</div>
+                <span>orders</span>
+              </div>
+            </div>
+            <div class="tree-item" onclick="toggleTreeItem(this)">
+              <div class="tree-icon">⚙️</div>
+              <span>Views</span>
+            </div>
+            <div class="tree-item" onclick="toggleTreeItem(this)">
+              <div class="tree-icon">🔧</div>
+              <span>Procedures</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-area">
+        <div class="tab-bar">
+          <button class="tab active">
+            <span>Query 1</span>
+            <span class="tab-close" onclick="closeTab(this)">×</span>
+          </button>
+          <button class="tab">
+            <span>Query 2</span>
+            <span class="tab-close" onclick="closeTab(this)">×</span>
+          </button>
+          <button
+            class="btn secondary"
+            onclick="newTab()"
+            style="margin-left: 10px; height: 30px"
+          >
+            + New Tab
+          </button>
+        </div>
+
+        <div class="editor-container">
+          <div class="sql-editor">
+            <div class="editor-header">
+              <span>SQL Editor</span>
+              <div>
+                <span style="font-size: 12px; color: #858585"
+                  >Line: 1, Column: 1</span
+                >
+              </div>
+            </div>
+            <div class="editor-wrapper">
+              <div class="line-numbers" id="lineNumbers">
+                1<br />2<br />3<br />4<br />5
+              </div>
+              <textarea
+                class="code-editor"
+                id="sqlEditor"
+                placeholder="Write your SQL query here..."
+                onkeyup="updateLineNumbers()"
+                onscroll="syncScroll()"
+                onselectionchange="updateCursor()"
+              ></textarea
+              >
+            </div>
+          </div>
+
+          <div class="results-panel">
+            <div class="results-header">
+              <span>Results</span>
+              <div>
+                <span style="font-size: 12px; color: #858585"
+                  >3 rows returned (0.045s)</span
+                >
+              </div>
+            </div>
+            <div class="results-content">
+              <!-- <table class="results-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>City</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>John Doe</td>
+                    <td>john.doe@example.com</td>
+                    <td>25</td>
+                    <td>Istanbul</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Jane Smith</td>
+                    <td>jane.smith@example.com</td>
+                    <td>30</td>
+                    <td>Ankara</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Michael Johnson</td>
+                    <td>michael.j@example.com</td>
+                    <td>22</td>
+                    <td>Izmir</td>
+                  </tr>
+                </tbody>
+              </table> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div>Connection: localhost:5432/mydatabase</div>
+      <div>Ready</div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
